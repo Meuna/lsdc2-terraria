@@ -1,0 +1,19 @@
+{
+    "key": "terraria",
+    "image": "meuna/lsdc2:terraria",
+    "cpu": "2 vCPU",
+    "memory": "4 GB",
+    "portMap": {
+        "7777": "tcp"
+    },
+    "envMap": {
+        "LSDC2_SNIFF_IFACE": "eth1"
+    },
+    "envParamMap": {
+        "TERRARIA_VERSION": "Terraria version (a.b.c.d)",
+        "SERVER_PASS": "Password",
+        "WORLD_SIZE": "Size (small-[medium]-large)",
+        "WORLD_DIFFICULTY": "Difficulty ([normal]-expert-master-journey)",
+        "WORLD_SEED": "Seed"
+    }
+}
