@@ -8,7 +8,7 @@ ENV WORLD_PATH=$TERRARIA_HOME/worlds \
     WORLD_DIFFICULTY=normal \
     WORLD_SEED= \
     SERVER_PORT=7777 \
-    SERVER_PASS=terraria
+    SERVER_PASS=password
 
 ENV LSDC2_SNIFF_IFACE="eth0" \
     LSDC2_SNIFF_FILTER="tcp port $SERVER_PORT" \
@@ -21,7 +21,7 @@ ENV LSDC2_SNIFF_IFACE="eth0" \
 
 WORKDIR $TERRARIA_HOME
 
-ADD https://github.com/Meuna/lsdc2-serverwrap/releases/download/v0.2.0/serverwrap /serverwrap
+ADD https://github.com/Meuna/lsdc2-serverwrap/releases/download/v0.3.1/serverwrap /serverwrap
 
 COPY start-server.sh $TERRARIA_HOME
 RUN apt-get update && apt-get install -y curl unzip \
