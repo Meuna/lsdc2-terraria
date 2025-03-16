@@ -21,10 +21,10 @@ case "$WORLD_SIZE" in
 esac
 
 case "$WORLD_DIFFICULTY" in
-    normal) WORLD_DIFFICULTY=0;;
-    expert) WORLD_DIFFICULTY=1;;
-    master) WORLD_DIFFICULTY=2;;
-    journey) WORLD_DIFFICULTY=3;;
+    normal|0) WORLD_DIFFICULTY=0;;
+    expert|1) WORLD_DIFFICULTY=1;;
+    master|2) WORLD_DIFFICULTY=2;;
+    journey|3) WORLD_DIFFICULTY=3;;
     *) WORLD_DIFFICULTY=0;;
 esac
 
