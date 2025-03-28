@@ -1,16 +1,16 @@
 #!/bin/bash
-export HOME=$TERRARIA_HOME
+export HOME=$LSDC2_HOME
 
 # Download Terraria dedicated server
 TERRARIA_VERSION=${TERRARIA_VERSION:-1.4.4.9}
-VERSION_SHORT=${TERRARIA_VERSION//.}
-VERSION_URL=https://terraria.org/api/download/pc-dedicated-server/terraria-server-${VERSION_SHORT}.zip
+version_short=${TERRARIA_VERSION//.}
+version_url=https://terraria.org/api/download/pc-dedicated-server/terraria-server-${version_short}.zip
 
-curl -s -L $VERSION_URL -o terraria.zip
+curl -s -L $version_url -o terraria.zip
 unzip terraria.zip
 rm terraria.zip
 
-TERRARIA_BIN=./${VERSION_SHORT}/Linux/TerrariaServer.bin.x86_64
+terraria_bin=./${version_short}/Linux/TerrariaServer.bin.x86_64
 
 # Create the configuration file
 case "$WORLD_SIZE" in
@@ -28,16 +28,16 @@ case "$WORLD_DIFFICULTY" in
     *) WORLD_DIFFICULTY=0;;
 esac
 
-cat > $TERRARIA_HOME/config <<EOF
-world=$WORLD_PATH/$WORLD_NAME.wld
+cat > $LSDC2_HOME/config <<EOF
+world=$GAME_SAVEDIR/$GAME_SAVENAME.wld
 autocreate=$WORLD_SIZE
 seed=$WORLD_SEED
-worldname=$WORLD_NAME
+worldname=$GAME_SAVENAME
 difficulty=$WORLD_DIFFICULTY
-port=$SERVER_PORT
+port=$GAME_PORT
 password=$SERVER_PASS
-motd=Welcome to Terraria !
-worldpath=$WORLD_PATH
+motd=Welcome to the Terraria des copains !
+worldpath=$GAME_SAVEDIR
 secure=1
 upnp=0
 npcstream=60
@@ -55,8 +55,8 @@ shutdown() {
 trap shutdown SIGINT SIGTERM
 
 
-chmod +x $TERRARIA_BIN
-$TERRARIA_BIN -config $TERRARIA_HOME/config < /tmp/trapfifo &
+chmod +x $terraria_bin
+$terraria_bin -config $LSDC2_HOME/config < /tmp/trapfifo &
 pid=$!
 
 # This is needed for some reason

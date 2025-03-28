@@ -1,37 +1,29 @@
 FROM docker.io/ubuntu:22.04
 
-ENV TERRARIA_HOME=/terraria
-
-ENV WORLD_PATH=$TERRARIA_HOME/worlds \
-    WORLD_NAME=lsdc2 \
-    WORLD_SIZE=medium \
-    WORLD_DIFFICULTY=normal \
-    WORLD_SEED= \
-    SERVER_PORT=7777 \
-    SERVER_PASS=password
-
-ENV LSDC2_SNIFF_IFACE="eth0" \
-    LSDC2_SNIFF_FILTER="tcp port $SERVER_PORT" \
-    LSDC2_CWD=$TERRARIA_HOME \
+ENV LSDC2_USER=lsdc2 \
+    LSDC2_HOME=/lsdc2 \
     LSDC2_UID=2000 \
-    LSDC2_GID=2000 \
-    LSDC2_PERSIST_FILES="$WORLD_NAME.wld" \
-    LSDC2_ZIP=1 \
-    LSDC2_ZIPFROM=$WORLD_PATH
+    LSDC2_GID=2000
 
-WORKDIR $TERRARIA_HOME
+WORKDIR $LSDC2_HOME
 
-ADD https://github.com/Meuna/lsdc2-serverwrap/releases/download/v0.3.1/serverwrap /serverwrap
-
-COPY start-server.sh $TERRARIA_HOME
+ADD https://github.com/Meuna/lsdc2-serverwrap/releases/download/v0.4.2/serverwrap /usr/local/bin
+COPY start-server.sh $LSDC2_HOME
 RUN apt-get update && apt-get install -y curl unzip \
     && rm -rf /var/lib/apt/lists/* \
-    && groupadd -g $LSDC2_GID -o terraria \
-    && useradd -g $LSDC2_GID -u $LSDC2_UID -d $TERRARIA_HOME -o --no-create-home terraria \
-    && mkdir $WORLD_PATH \
-    && chmod u+x /serverwrap start-server.sh \
-    && chown -R terraria:terraria $TERRARIA_HOME
+    && groupadd -g $LSDC2_GID -o $LSDC2_USER \
+    && useradd -g $LSDC2_GID -u $LSDC2_UID -d $LSDC2_HOME -o --no-create-home $LSDC2_USER \
+    && chmod +x /usr/local/bin/serverwrap start-server.sh \
+    && chown -R $LSDC2_USER:$LSDC2_USER $LSDC2_HOME
 
-EXPOSE 7777/tcp
-ENTRYPOINT ["/serverwrap"]
+ENV GAME_SAVEDIR=$LSDC2_HOME/savedir \
+    GAME_SAVENAME=lsdc2 \
+    GAME_PORT=7777
+
+ENV LSDC2_SNIFF_IFACE="eth1" \
+    LSDC2_SNIFF_FILTER="tcp port $GAME_PORT" \
+    LSDC2_PERSIST_FILES="$GAME_SAVENAME.wld" \
+    LSDC2_ZIPFROM=$GAME_SAVEDIR
+
+ENTRYPOINT ["serverwrap"]
 CMD ["./start-server.sh"]
