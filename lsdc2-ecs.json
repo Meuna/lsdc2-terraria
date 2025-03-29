@@ -1,10 +1,10 @@
 {
-    "name": "terraria",
+    "name": "terraria-ecs",
     "engineType": "ecs",
     "engine": {
         "image": "meuna/lsdc2:terraria",
         "cpu": "2 vCPU",
-        "memory": "4 GB"
+        "memory": "2 GB"
     },
     "portMap": {
         "7777": "tcp"
