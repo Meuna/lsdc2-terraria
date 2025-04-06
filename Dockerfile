@@ -7,7 +7,7 @@ ENV LSDC2_USER=lsdc2 \
 
 WORKDIR $LSDC2_HOME
 
-ADD https://github.com/Meuna/lsdc2-serverwrap/releases/download/v0.4.4/serverwrap /usr/local/bin
+ADD https://github.com/Meuna/lsdc2-serverwrap/releases/download/v0.5.0/serverwrap /usr/local/bin
 COPY start-server.sh $LSDC2_HOME
 RUN apt-get update && apt-get install -y curl unzip \
     && rm -rf /var/lib/apt/lists/* \
