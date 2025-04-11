@@ -7,7 +7,7 @@ ENV LSDC2_USER=lsdc2 \
 
 WORKDIR $LSDC2_HOME
 
-ADD https://github.com/Meuna/lsdc2-serverwrap/releases/download/v0.5.0/serverwrap /usr/local/bin
+ADD https://github.com/Meuna/lsdc2-serverwrap/releases/download/v0.5.1/serverwrap /usr/local/bin
 COPY start-server.sh $LSDC2_HOME
 RUN apt-get update && apt-get install -y curl unzip \
     && rm -rf /var/lib/apt/lists/* \
@@ -20,8 +20,7 @@ ENV GAME_SAVEDIR=$LSDC2_HOME/savedir \
     GAME_SAVENAME=lsdc2 \
     GAME_PORT=7777
 
-ENV LSDC2_SNIFF_IFACE="eth1" \
-    LSDC2_SNIFF_FILTER="tcp port $GAME_PORT" \
+ENV LSDC2_SNIFF_FILTER="tcp dst port $GAME_PORT" \
     LSDC2_PERSIST_FILES="$GAME_SAVENAME.wld" \
     LSDC2_ZIPFROM=$GAME_SAVEDIR
 
