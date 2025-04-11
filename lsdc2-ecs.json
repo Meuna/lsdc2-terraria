@@ -3,19 +3,19 @@
     "engineType": "ecs",
     "engine": {
         "image": "meuna/lsdc2:terraria",
-        "cpu": "2 vCPU",
+        "cpu": "1 vCPU",
         "memory": "2 GB"
     },
-    "portMap": {
-        "7777": "tcp"
+    "ingress": {
+        "tcp": [7777]
     },
-    "envMap": {
+    "env": {
         "LSDC2_LOW_MEMORY_WARNING_MB": "512",
         "LSDC2_LOW_MEMORY_SIGNAL_MB": "256",
         "LSDC2_SCAN_STDOUT": "true",
         "LSDC2_WAKEUP_SENTINEL": "Server started"
     },
-    "envParamMap": {
+    "params": {
         "TERRARIA_VERSION": "Terraria version (a.b.c.d)",
         "SERVER_PASS": "Password",
         "WORLD_SIZE": "Size (small-[medium]-large)",
